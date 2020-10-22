@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h5><a href="{% url 'blog:post_following' %}">To my profile </a></h5>
+
+<p>User: {{ object_profile }}</p>
+{% if follow %}
+    <form action="{% url 'account:follow_unfollow' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="profile_pk" value={{ object_profile.pk }}>
+    <button id="follow-btn" type="submit">unfollow</button>
+    </form>
+{% else %}
+    <form action="{% url 'account:follow_unfollow' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="profile_pk" value={{ object_profile.pk }}>
+    <button id="unfollow-btn" type="submit">follow</button>
+    </form>
+{% endif %}
+<div>
+    {% for post in object_profile.profiles_post %}
+        <h5>Post: </h5>
+        <p>{{ post.title }}</p>
+        <p>{{ post.created }}</p>
+        <hr>
+    {% endfor %}
+</div>
+</body>
+</html>

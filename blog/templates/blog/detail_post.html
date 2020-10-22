@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+        <h2>Title: {{ post_object.title }}</h2>
+        <p>{{ post_object.body }}</p>
+        <p>Created: {{ post_object.created }}</p>
+        <p>Author: {{ post_object.author }}</p>
+    <form action="{% url 'blog:read_post' %}" method="POST">
+        {% csrf_token %}
+        <input type="checkbox" {% if post_object.read %} name="read" checked="checked"  {% endif %}>
+        <input type="hidden" name="post_pk" value={{ post_object.pk }}>
+
+        <button type="submit">Read</button>
+    </form>
+
+</div>
+</body>
+</html>

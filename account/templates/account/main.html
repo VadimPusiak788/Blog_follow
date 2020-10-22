@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h5> <a href="{% url 'blog:post_following' %}">My profile</a></h5>
+{% for profile in profiles %}
+    <div>
+        <p>{{ profile }}</p>
+        <a href="{% url 'account:detail_profile' pk=profile.pk %}">
+        <button>See profile</button></a>
+    </div>
+{% endfor %}
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Username: {{ profile }}</p>
+<a href="{% url 'account:profiles_list'%}">
+<button>People to follow</button>
+</a>
+{% for p in profile.following.all %}
+    <li>{{ p }}</li>
+{% endfor %}
+<div>
+    <h1>Post</h1>
+    {% for post in posts %}
+        <div>
+            <p>Title: {{ post.title }}</p>
+            <p>Author: {{ post.author }}</p>
+            <p>Created: {{ post.created }}</p>
+            <p>
+                {% if post.read %}
+                    <p>&#10004;</p>
+                 {% else %}
+                    <p>&#10008;	</p>
+                {% endif %}
+            </p>
+            <a href="{% url 'blog:post_detail' pk=post.pk%}">
+                <button type="submit">Detail</button>
+            </a>
+
+                    <hr>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

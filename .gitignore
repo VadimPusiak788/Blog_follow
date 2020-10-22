@@ -1,0 +1,8 @@
+*.py[co]
+env/
+*.sqlite3
+media/
+*/migrations/
+*/__pycache__/
+__pycache__/
+/.idea
