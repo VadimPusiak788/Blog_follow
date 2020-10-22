@@ -8,6 +8,10 @@
 <p>Username: {{ profile }}</p>
 <a href="{% url 'account:profiles_list'%}">
 <button>People to follow</button>
+
+</a>
+<a href="{% url 'blog:create_post' %}" >
+    <button>Create post</button>
 </a>
 {% for p in profile.following.all %}
     <li>{{ p }}</li>
@@ -25,7 +29,6 @@
                  {% else %}
                     <p>&#10008;	</p>
                 {% endif %}
-            </p>
             <a href="{% url 'blog:post_detail' pk=post.pk%}">
                 <button type="submit">Detail</button>
             </a>
