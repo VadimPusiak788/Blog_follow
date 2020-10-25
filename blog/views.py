@@ -6,23 +6,7 @@ from .models import Post
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import PostForm
 
-
-def post_following_profiles(request):
-    profile = Profile.objects.get(user=request.user)
-    user = [user for user in profile.following.all()]
-    posts = []
-    qs = None
-    for u in user:
-        p = Profile.objects.get(user=u)
-        posts_user = p.post_set.all()
-        posts.append(posts_user)
-
-    posts.append(profile.post_set.all())
-    if len(posts) > 0:
-        qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.created)
-    return render(request, 'blog/main.html', {'profile': profile, 'posts': qs})
 
 
 class DetailPostView(DetailView):
@@ -58,3 +42,19 @@ class CreatePost(CreateView, LoginRequiredMixin):
         form.instance.author = self.request.user.profile
         form.instance.read = True
         return super().form_valid(form)
+
+
+def post_following_profiles(request):
+    profile = Profile.objects.get(user=request.user)
+    user = [user for user in profile.following.all()]
+    posts = []
+    qs = None
+    for u in user:
+        p = Profile.objects.get(user=u)
+        posts_user = p.post_set.all()
+        posts.append(posts_user)
+
+    posts.append(profile.post_set.all())
+    if len(posts) > 0:
+        qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.created)
+    return render(request, 'blog/main.html', {'profile': profile, 'posts': qs})
