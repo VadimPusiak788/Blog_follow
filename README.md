@@ -6,4 +6,4 @@
 2. Execute docker-compose build
 3. Execute docker-compose run web python news/manage.py migrate
 4. Execute docker-compose up
-5. Go to http://localhost:8000/post to see REST page
+5. Go to http://localhost:8000/post
