@@ -15,6 +15,5 @@ def post_create_send_email(sender, instance, created, **kwargs):
         user_emails = instance.author.following.values_list(
             'email', flat=True
         )
-        for email in user_emails:
-            print(email)
-            send_mail_task.delay(email, blog_title, post_url)
+        emails = [email for email in user_emails]
+        send_mail_task.delay(emails, blog_title, post_url)
