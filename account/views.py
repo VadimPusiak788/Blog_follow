@@ -1,13 +1,12 @@
-from django.shortcuts import render, redirect, HttpResponse
-from django.views.generic import ListView, DetailView, View
+from django.shortcuts import redirect
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Profile
-from blog.models import Post
 
 
-def follow_unfollow(request):
-    if request.method == 'POST':
-        my_profile = Profile.objects.get(user=request.user)
-        pk = request.POST.get('profile_pk')
+class FollowUnfollow(CreateView):
+    def post(self, request, *args, **kwargs):
+        my_profile = Profile.objects.get(user=self.request.user)
+        pk = self.request.POST.get('profile_pk')
         obj = Profile.objects.get(pk=pk)
 
         if obj.user in my_profile.following.all():
@@ -16,8 +15,6 @@ def follow_unfollow(request):
             my_profile.following.add(obj.user)
 
         return redirect('account:profiles_list')
-
-    return redirect('blog:post_following')
 
 
 class ProfileListView(ListView):

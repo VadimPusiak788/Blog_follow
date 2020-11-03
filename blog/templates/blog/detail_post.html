@@ -10,17 +10,16 @@
         <p>{{ post_object.body }}</p>
         <p>Created: {{ post_object.created }}</p>
         <p>Author: {{ post_object.author }}</p>
-    {% if post.read %}
-                    <p>&#10008; no</p>
+    {% if not post.read %}
+        <p>&#10008; no</p>
         <form action="{% url 'blog:read_post' %}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="post_pk" value={{ post_object.pk }}>
-
         <button type="submit">Read</button>
     </form>
-                 {% else %}
-                    <p>&#10004;	yes</p>
-                {% endif %}
+    {% else %}
+        <p>&#10004;	yes</p>
+    {% endif %}
 
 
 

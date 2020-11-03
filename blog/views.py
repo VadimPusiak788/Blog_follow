@@ -3,10 +3,9 @@ from account.models import Profile
 from itertools import chain
 from django.views.generic import DetailView, FormView
 from .models import Post
+from django.views.generic import ListView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
 
 
 class DetailPostView(DetailView):
@@ -20,16 +19,14 @@ class DetailPostView(DetailView):
         return post
 
 
-def read_post(request):
-    if request.method == "POST":
-        pk = request.POST.get('post_pk')
+class MarkPost(CreateView):
+    def post(self, request, *args, **kwargs):
+        pk = self.request.POST.get('post_pk')
         post = Post.objects.get(pk=pk)
         if not post.read:
             post.read = True
             post.save()
         return redirect('blog:post_following')
-
-    return redirect('blog:read_post')
 
 
 class CreatePost(CreateView, LoginRequiredMixin):

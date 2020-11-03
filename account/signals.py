@@ -8,4 +8,3 @@ from django.contrib.auth.models import User
 def post_save_create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
