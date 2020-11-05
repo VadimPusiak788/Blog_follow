@@ -8,7 +8,6 @@ from .tasks import send_mail_task
 @receiver(post_save, sender=Post)
 def post_create_send_email(sender, instance, created, **kwargs):
     if created:
-        print('sda')
 
         blog_title = instance.title
         post_url = f'http://0.0.0.0:8000/posts/{instance.pk}'

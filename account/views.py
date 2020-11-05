@@ -23,6 +23,8 @@ class ProfileListView(ListView):
     context_object_name = 'profiles'
 
     def get_queryset(self):
+        # if self.request.is_authenticated:
+        #     return []
         return Profile.objects.all().exclude(user=self.request.user)
 
 

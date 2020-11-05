@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from account.models import Profile
 from itertools import chain
-from django.views.generic import DetailView, FormView
+from django.views.generic import DetailView
 from .models import Post
-from django.views.generic import ListView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+import redis
+from django.conf import settings
+r = redis.Redis(host=settings.REDIS_HOST,
+                port=settings.REDIS_PORT,
+                db=settings.REDIS_DB)
 
 
 class DetailPostView(DetailView):
@@ -18,6 +22,12 @@ class DetailPostView(DetailView):
         post = Post.objects.get(pk=pk)
         return post
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        total_views = r.incr(f'post:{post.id}:views')
+        context['total_views'] = total_views
+        return context
 
 class MarkPost(CreateView):
     def post(self, request, *args, **kwargs):

@@ -10,7 +10,7 @@
         <p>{{ post_object.body }}</p>
         <p>Created: {{ post_object.created }}</p>
         <p>Author: {{ post_object.author }}</p>
-    {% if not post.read %}
+    {% if not post_object.read %}
         <p>&#10008; no</p>
         <form action="{% url 'blog:read_post' %}" method="POST">
         {% csrf_token %}
@@ -20,7 +20,7 @@
     {% else %}
         <p>&#10004;	yes</p>
     {% endif %}
-
+    <span>{{ total_views }} ds</span>
 
 
 </div>
