@@ -8,6 +8,7 @@
 <h5><a href="{% url 'blog:post_following' %}">To my profile </a></h5>
 
 <p>User: {{ object_profile }}</p>
+<span>Views {{ total_view }}</span>
 {% if follow %}
     <form action="{% url 'account:follow_unfollow' %}" method="POST">
     {% csrf_token %}

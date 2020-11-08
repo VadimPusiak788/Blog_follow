@@ -9,7 +9,7 @@
 {% for profile in profiles %}
     <div>
         <p>{{ profile }}</p>
-        <a href="{% url 'account:detail_profile' pk=profile.pk %}">
+        <a href="{{ profile.get_absolute_url }}">
         <button>See profile</button></a>
     </div>
 {% endfor %}
