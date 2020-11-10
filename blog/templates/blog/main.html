@@ -24,7 +24,8 @@
             <p>Author: {{ post.author }}</p>
             <p>Created: {{ post.created }}</p>
             <p>
-                {% if post.read %}
+            {{ reads }}
+                {% if reads  %}
                     <p>&#10004;</p>
                  {% else %}
                     <p>&#10008;	</p>

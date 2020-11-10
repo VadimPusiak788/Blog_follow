@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, HttpResponse
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Profile
-
 import redis
 from django.conf import settings
 from blog.models import Post

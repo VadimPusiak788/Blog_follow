@@ -8,7 +8,7 @@ class Post(models.Model):
     body = models.TextField()
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    read = models.BooleanField(default=False)
+    read = models.ManyToManyField(Profile, related_name='read_post')
 
     def __str__(self):
         return self.title

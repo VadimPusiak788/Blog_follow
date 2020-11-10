@@ -24,8 +24,10 @@ class DetailPostView(DetailView):
     def get_object(self, **kwargs):
         pk = self.kwargs.get('pk')
         post = Post.objects.get(pk=pk)
-        post.read = True
-        post.save()
+        my_profile = Profile.objects.get(user=self.request.user)
+        if my_profile not in post.read.all():
+            post.read.add(my_profile)
+
         return post
 
     def get_context_data(self, **kwargs):
@@ -44,7 +46,6 @@ class CreatePost(CreateView, LoginRequiredMixin):
 
     def form_valid(self, form):
         form.instance.author = self.request.user.profile
-        form.instance.read = True
         return super().form_valid(form)
 
 
@@ -59,11 +60,13 @@ class FollowProfile(View):
         for user in users:
             profile_user = Profile.objects.get(user=user)
             post_user = profile_user.profiles_post()
+
             posts.append(post_user)
 
         posts.append(profile.profiles_post())
 
         if len(posts) > 1:
             qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.created)
-        return render(request, 'blog/main.html', {'profile': profile, 'posts': qs})
+
+        return render(request, 'blog/main.html', {'profile': profile, 'posts': qs, 'reads': read})
 
