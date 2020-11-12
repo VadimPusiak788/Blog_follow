@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 from .models import Post
 from account.models import Profile
@@ -16,3 +16,9 @@ def post_create_send_email(sender, instance, created, **kwargs):
         )
         emails = [email for email in user_emails]
         send_mail_task.delay(emails, blog_title, post_url)
+
+
+@receiver(m2m_changed, sender=Post.read.through)
+def read_post_change(sender, instance, **kwargs):
+    instance.total_read = instance.read.count()
+    instance.save()

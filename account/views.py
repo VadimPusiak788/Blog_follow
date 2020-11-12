@@ -16,7 +16,7 @@ class FollowUnfollow(CreateView):
         obj = Profile.objects.get(pk=pk)
 
         if obj.user in my_profile.following.all():
-            posts = obj.profiles_post()
+            posts = obj.posts.all()
             for post in posts:
                 post.read = False
                 post.save()

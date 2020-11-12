@@ -11,15 +11,12 @@
         <p>Created: {{ post_object.created }}</p>
         <p>Author: {{ post_object.author }}</p>
     {% if  post_object.read %}
-        <p>&#10004;	yes</p>
+        <p>&#10004;	yes </p>
 
     {% else %}
         <p>&#10008; no</p>
     {% endif %}
-    <span>{{ post_object.read }}</span>
-    <span>{{ total_views }}</span>
-
-
+    <span>Views this post: {{ total_views }}</span>
 </div>
 </body>
 </html>

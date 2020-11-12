@@ -35,4 +35,21 @@ class PostSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('pk', 'title', 'author', 'read')
+        fields = ('pk', 'title', 'body', 'author', 'total_read')
+
+
+class AllPostSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('title', 'body', 'created', 'total_read')
+
+
+class AllPostProfileSerializers(serializers.ModelSerializer):
+    posts = AllPostSerializers(many=True)
+    count_following = serializers.IntegerField()
+    user = UserSerializers()
+    count_post = serializers.IntegerField()
+
+    class Meta:
+        model = Profile
+        fields = ('user', 'count_post', 'count_following', 'posts')
